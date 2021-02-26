@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Frog : MonoBehaviour
 {
@@ -22,6 +23,23 @@ public class Frog : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.DownArrow))
         {
             frogrb.MovePosition(frogrb.position + Vector2.down);
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.tag == "Bird")
+        {
+            DataManager.playerLives -= 1;
+            Lives.lives -= 1;
+            if (DataManager.playerLives <= 0)
+            {
+                SceneManager.LoadScene("ExitScreen");
+            }
+            else
+            {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            }
         }
     }
 }
